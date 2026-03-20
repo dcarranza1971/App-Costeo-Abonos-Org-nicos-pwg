@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Costos Agro</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2E7D32">
+    <link rel="apple-touch-icon" href="icon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fa-solid fa-leaf"></i>
+                <h1>AgroCostos</h1>
+            </div>
+            <div class="actions">
+                <button id="btn-save" class="btn btn-primary" title="Guardar Manualmente">
+                    <i class="fa-solid fa-floppy-disk"></i> Guardar
+                </button>
+                <button id="btn-export" class="btn btn-secondary" title="Exportar a CSV">
+                    <i class="fa-solid fa-file-export"></i> Exportar
+                </button>
+                <button id="btn-reset" class="btn btn-danger" title="Restablecer Datos">
+                    <i class="fa-solid fa-trash-can"></i> Restablecer
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Selector de formulación -->
+            <section class="card formulation-selector">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-flask"></i> Tipo de Abono Organico</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="formulation-select">Seleccionar formulación</label>
+                        <select id="formulation-select" class="form-control">
+                            <!-- Opciones generadas en JS -->
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <div class="dashboard-grid">
+                <!-- Insumos -->
+                <section class="card section-inputs">
+                    <div class="card-header flex-between">
+                        <h2><i class="fa-solid fa-seedling"></i> Insumos Requeridos</h2>
+                        <button id="btn-add-input" class="btn btn-sm btn-outline"><i class="fa-solid fa-plus"></i> Añadir Insumo</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="inputs-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Insumo</th>
+                                        <th>Cant. Sugerida</th>
+                                        <th>Unidad</th>
+                                        <th>Costo Unit. (L.)</th>
+                                        <th>Costo Total (L.)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Filas generadas por JS -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" class="text-right font-bold">Total Insumos:</td>
+                                        <td class="font-bold text-highlight" id="total-inputs-cost">L. 0.00</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mano de Obra -->
+                <section class="card section-labor">
+                    <div class="card-header flex-between">
+                        <h2><i class="fa-solid fa-users"></i> Mano de Obra (Por Hora)</h2>
+                        <button id="btn-add-labor" class="btn btn-sm btn-outline"><i class="fa-solid fa-plus"></i> Añadir Actividad</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="labor-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Actividad</th>
+                                        <th>N° Trabajadores</th>
+                                        <th>Costo x Hora (L.)</th>
+                                        <th>Número total de horas</th>
+                                        <th>Costo Total (L.)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Filas generadas por JS -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" class="text-right font-bold">Total Mano de Obra:</td>
+                                        <td class="font-bold text-highlight" id="total-labor-cost">L. 0.00</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Resumen General -->
+            <section class="card summary-panel">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-chart-pie"></i> Resumen de Producción</h2>
+                </div>
+                <div class="card-body summary-grid">
+                    <div class="summary-item">
+                        <span class="summary-label">Total Insumos</span>
+                        <span class="summary-value" id="summary-inputs">L. 0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total Mano de Obra</span>
+                        <span class="summary-value" id="summary-labor">L. 0.00</span>
+                    </div>
+                    <div class="summary-item highlight">
+                        <span class="summary-label">Costo Total de Producción</span>
+                        <span class="summary-value" id="summary-total">L. 0.00</span>
+                    </div>
+                </div>
+                <div class="volume-calculator">
+                    <div class="form-group row-group">
+                        <label for="expected-volume">Volumen Esperado (Unidades/Kg/Sacos)</label>
+                        <input type="number" id="expected-volume" class="form-control" value="1" min="1">
+                    </div>
+                    <div class="unit-cost-result">
+                        <span class="summary-label">Costo Unitario Producido</span>
+                        <span class="summary-value" id="summary-unit-cost">L. 0.00</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Notificaciones -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
