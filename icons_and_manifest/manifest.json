@@ -1,4 +1,7 @@
-// This is the "Offline page" service worker
+{
+  "name": "AbonoCostos - Calculadora de Abonos OrganicosYour App Name",
+  "short_name": "AbonoCostos",
+  "icons": [// This is the "Offline page" service worker
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
@@ -45,3 +48,9 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000"
+}
