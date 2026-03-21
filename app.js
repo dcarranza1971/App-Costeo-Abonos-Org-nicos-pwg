@@ -421,30 +421,6 @@ function updateTotals() {
     const vol = parseFloat(document.getElementById('expected-volume').value) || 1;
     const unitCost = grandTotal / vol;
     document.getElementById('summary-unit-cost').textContent = formatMoney(unitCost);
-
-    // NUEVA LÓGICA CONDICIONAL: Costo del Lote Producido
-    const formName = (form.name || '').toLowerCase();
-    const isCompostOrBocashi = formName.includes('compost') || formName.includes('bocashi');
-    const loteCostContainer = document.getElementById('lote-cost-container');
-
-    if (isCompostOrBocashi) {
-        // Obtenemos la 'Cantidad de Libras Totales' sumando los insumos que se miden en libras
-        const cantidadLibrasTotales = form.inputs.reduce((acc, curr) => {
-            const unit = (curr.unit || '').trim().toLowerCase();
-            if (unit.includes('libra') || unit.includes('lb')) {
-                return acc + parseNumber(curr.quantity);
-            }
-            return acc;
-        }, 0);
-
-        // Multiplica [Costo Unitario Producido] x [Cantidad de Libras Totales]
-        const costoLoteProducido = unitCost * cantidadLibrasTotales;
-        
-        document.getElementById('summary-lote-cost').textContent = formatMoney(costoLoteProducido);
-        loteCostContainer.style.display = 'flex';
-    } else {
-        loteCostContainer.style.display = 'none';
-    }
 }
 
 /**
